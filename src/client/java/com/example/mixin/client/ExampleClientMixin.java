@@ -2,6 +2,7 @@ package com.example.mixin;
 
 import com.example.ExampleModClient;
 import com.example.HileGui;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.mob.HostileEntity;
@@ -17,6 +18,7 @@ public class ExampleClientMixin {
     @Inject(at = @At("HEAD"), method = "tick")
     private void onTick(CallbackInfo info) {
         ClientPlayerEntity player = (ClientPlayerEntity) (Object) this;
+        MinecraftClient client = MinecraftClient.getInstance();
 
         if (ExampleModClient.flyKey.wasPressed()) {
             ExampleModClient.flyActive = !ExampleModClient.flyActive;
@@ -29,7 +31,7 @@ public class ExampleClientMixin {
         }
 
         if (ExampleModClient.guiKey.wasPressed()) {
-            player.client.setScreen(new HileGui());
+            client.setScreen(new HileGui());
         }
 
         if (ExampleModClient.flyActive) {
@@ -38,9 +40,9 @@ public class ExampleClientMixin {
         }
 
         if (ExampleModClient.killauraActive && player.age % 5 == 0) {
-            for (Entity entity : player.getWorld().getEntities()) {
+            for (Entity entity : client.world.getEntities()) {
                 if (entity instanceof HostileEntity && entity.distanceTo(player) < 5) {
-                    player.networkHandler.sendPacket(new net.minecraft.network.packet.c2s.play.PlayerInteractEntityC2SPacket.AttackAt(entity, player.isSneaking(), null));
+                    client.interactionManager.attackEntity(player, entity);
                     player.swingHand(Hand.MAIN_HAND);
                     break; 
                 }
