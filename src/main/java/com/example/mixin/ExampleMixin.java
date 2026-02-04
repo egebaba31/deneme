@@ -24,28 +24,22 @@ public class ExampleMixin {
             ExampleModClient.flyActive = !ExampleModClient.flyActive;
             player.sendMessage(Text.literal("§b[MOD] §fFly: " + (ExampleModClient.flyActive ? "§aAÇIK" : "§cKAPALI")), true);
         }
-        
         if (ExampleModClient.killauraKey.wasPressed()) {
             ExampleModClient.killauraActive = !ExampleModClient.killauraActive;
             player.sendMessage(Text.literal("§b[MOD] §fKillaura: " + (ExampleModClient.killauraActive ? "§aAÇIK" : "§cKAPALI")), true);
         }
-
         if (ExampleModClient.guiKey.wasPressed()) {
             client.setScreen(new HileGui());
         }
-
         if (ExampleModClient.flyActive) {
             player.getAbilities().allowFlying = true;
             player.getAbilities().flying = true;
         }
-
         if (ExampleModClient.killauraActive && player.age % 5 == 0 && client.world != null) {
             for (Entity entity : client.world.getEntities()) {
                 if (entity instanceof HostileEntity && entity.distanceTo(player) < 5) {
-                    if (client.interactionManager != null) {
-                        client.interactionManager.attackEntity(player, entity);
-                        player.swingHand(Hand.MAIN_HAND);
-                    }
+                    client.interactionManager.attackEntity(player, entity);
+                    player.swingHand(Hand.MAIN_HAND);
                     break; 
                 }
             }
