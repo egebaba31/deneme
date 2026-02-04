@@ -17,27 +17,28 @@ public class ExampleMixin {
     private void onTick(CallbackInfo info) {
         ClientPlayerEntity player = (ClientPlayerEntity) (Object) this;
 
-        // TUŞ KONTROLLERİ
+        // F TUŞU - FLY KONTROLÜ
         if (ExampleMod.flyKey.wasPressed()) {
             ExampleMod.flyActive = !ExampleMod.flyActive;
-            player.sendMessage(Text.literal("Fly: " + (ExampleMod.flyActive ? "§aAÇIK" : "§cKAPALI")), true);
+            player.sendMessage(Text.literal("§b[MOD] §fFly: " + (ExampleMod.flyActive ? "§aAÇIK" : "§cKAPALI")), true);
         }
         
+        // R TUŞU - KILLAURA KONTROLÜ
         if (ExampleMod.killauraKey.wasPressed()) {
             ExampleMod.killauraActive = !ExampleMod.killauraActive;
-            player.sendMessage(Text.literal("Killaura: " + (ExampleMod.killauraActive ? "§aAÇIK" : "§cKAPALI")), true);
+            player.sendMessage(Text.literal("§b[MOD] §fKillaura: " + (ExampleMod.killauraActive ? "§aAÇIK" : "§cKAPALI")), true);
         }
 
-        // FLY MEKANİĞİ
+        // FLY ÇALIŞTIRMA
         if (ExampleMod.flyActive) {
             player.getAbilities().allowFlying = true;
             player.getAbilities().flying = true;
         }
 
-        // KILLAURA MEKANİĞİ (Yakındaki canavarlara otomatik vurur)
-        if (ExampleMod.killauraActive && player.age % 5 == 0) { // Her 5 tickte bir kontrol eder
+        // KILLAURA ÇALIŞTIRMA
+        if (ExampleMod.killauraActive && player.age % 5 == 0) {
             for (Entity entity : player.getWorld().getEntities()) {
-                if (entity instanceof HostileEntity && entity.distanceTo(player) < 5) { // 5 metre mesafe
+                if (entity instanceof HostileEntity && entity.distanceTo(player) < 5) {
                     player.networkHandler.sendPacket(new net.minecraft.network.packet.c2s.play.PlayerInteractEntityC2SPacket.AttackAt(entity, player.isSneaking(), null));
                     player.swingHand(Hand.MAIN_HAND);
                     break; 
