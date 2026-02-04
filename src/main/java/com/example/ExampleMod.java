@@ -16,11 +16,8 @@ public class ExampleMod implements ModInitializer {
 
     @Override
     public void onInitialize() {
-        // Fly = F tuşu
-        flyKey = KeyBindingHelper.registerKeyBinding(new KeyBinding("Ucus (Fly)", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_F, "Hileler"));
-        // Killaura = R tuşu
+        flyKey = KeyBindingHelper.registerKeyBinding(new KeyBinding("Fly", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_F, "Hileler"));
         killauraKey = KeyBindingHelper.registerKeyBinding(new KeyBinding("Killaura", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_R, "Hileler"));
-        // GUI = K tuşu
         guiKey = KeyBindingHelper.registerKeyBinding(new KeyBinding("Hile Menusu", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_K, "Hileler"));
     }
 }
