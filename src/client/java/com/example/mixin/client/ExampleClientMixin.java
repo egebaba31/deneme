@@ -14,7 +14,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(ClientPlayerEntity.class)
-public class ExampleClientMixin {
+public class ExampleMixin {
     @Inject(at = @At("HEAD"), method = "tick")
     private void onTick(CallbackInfo info) {
         ClientPlayerEntity player = (ClientPlayerEntity) (Object) this;
@@ -39,7 +39,7 @@ public class ExampleClientMixin {
             player.getAbilities().flying = true;
         }
 
-        if (ExampleModClient.killauraActive && player.age % 5 == 0) {
+        if (ExampleModClient.killauraActive && player.age % 5 == 0 && client.world != null) {
             for (Entity entity : client.world.getEntities()) {
                 if (entity instanceof HostileEntity && entity.distanceTo(player) < 5) {
                     client.interactionManager.attackEntity(player, entity);
