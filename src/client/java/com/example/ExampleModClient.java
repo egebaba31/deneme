@@ -10,7 +10,6 @@ public class ExampleModClient implements ClientModInitializer {
     public static KeyBinding flyKey;
     public static KeyBinding killauraKey;
     public static KeyBinding guiKey;
-
     public static boolean flyActive = false;
     public static boolean killauraActive = false;
 
